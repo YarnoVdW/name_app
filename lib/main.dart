@@ -46,6 +46,11 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void deleteWord(word) {
+    favorites.remove(word);
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -198,7 +203,12 @@ class FavoritesPage extends StatelessWidget {
             child: Text('You have ${appState.favorites.length} favorites!')),
         for (var pair in appState.favorites)
           ListTile(
-            leading: Icon(Icons.favorite),
+            leading: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                appState.deleteWord(pair);
+              },
+            ),
             title: Text(pair.asLowerCase),
           ),
       ],
